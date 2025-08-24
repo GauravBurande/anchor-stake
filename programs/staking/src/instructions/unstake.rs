@@ -74,6 +74,10 @@ impl Unstake<'_> {
         let time_elapsed = ((Clock::get()?.unix_timestamp - self.stake_account.staked_at) /86400) as u32;
 
         require!(time_elapsed > self.config.freeze_period, StakeError::FreezePeriodNotOver);
+        require!(
+            self.user_account.amount_staked > 0,
+            StakeError::NothingToUnstake
+        );
 
         self.user_account.points += time_elapsed * self.config.points_per_stake as u32;
 

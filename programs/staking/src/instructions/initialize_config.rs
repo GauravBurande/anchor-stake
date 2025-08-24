@@ -29,12 +29,10 @@ pub struct InitializeConfig<'info> {
 
     pub token_program: Program<'info, Token>,
     pub system_program: Program<'info, System>,
-    // TODO: understwand why we need this and what's Sysvar?
-    pub rent: Sysvar<'info, Rent>
 }
 
 impl InitializeConfig<'_> {
-    pub fn initialize_config(&mut self, points_per_stake:u8, max_stake:u8, freeze_period:u32, bumps:InitializeConfigBumps) -> Result<()> {
+    pub fn initialize_config(&mut self, points_per_stake:u8, max_stake:u8, freeze_period:u32, bumps:&InitializeConfigBumps) -> Result<()> {
         self.config.set_inner(StakeConfig { points_per_stake, max_stake, freeze_period, reward_bump: bumps.reward_mint, bump: bumps.config });
         Ok(())
     }

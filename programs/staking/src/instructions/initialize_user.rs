@@ -20,7 +20,7 @@ pub struct InitializeUser<'info> {
 }
 
 impl InitializeUser<'_> {
-    pub fn initialize_user(&mut self, bumps: InitializeUserBumps) -> Result<()> {
+    pub fn initialize_user(&mut self, bumps: &InitializeUserBumps) -> Result<()> {
         self.user_account.set_inner(UserAccount { points: 0, amount_staked: 0, bump: bumps.user_account });
         Ok(())
     }
